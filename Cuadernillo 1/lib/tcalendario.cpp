@@ -347,6 +347,12 @@ bool TCalendario::operator==(const TCalendario &cal)
         if(this->mensaje==NULL && cal.mensaje==NULL){
             return true;
         }
+        if(this->mensaje!=NULL && cal.mensaje == NULL){
+            return false;
+        }
+        if(this->mensaje==NULL && cal.mensaje != NULL){
+            return false;
+        }
         if(strlen(this->mensaje)==0&&strlen(cal.mensaje)==0){
             return true;
         }
