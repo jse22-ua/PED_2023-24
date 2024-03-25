@@ -22,10 +22,10 @@ class TCalendario{
         TCalendario &operator--();
         bool ModFecha(int,int,int);
         bool ModMensaje(char *);
-        bool operator==(const TCalendario &);
-        bool operator!=(const TCalendario &);
-        bool operator>(const TCalendario &);
-        bool operator<(const TCalendario &);
+        bool operator==(const TCalendario &) const;
+        bool operator!=(const TCalendario &) const;
+        bool operator>(const TCalendario &) const;
+        bool operator<(const TCalendario &) const;
         bool Esvacio() const;
         int Dia() const;
         int Mes() const;

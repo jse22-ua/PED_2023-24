@@ -6,8 +6,8 @@
 using namespace std;
 
 class TNodoCalendario{
-    friend TListaCalendario;
-    friend TListaPos;
+    friend class TListaCalendario;
+    friend class TListaPos;
     public:
         TNodoCalendario();
         TNodoCalendario(const TNodoCalendario &);
@@ -20,8 +20,8 @@ class TNodoCalendario{
 };
 
 class TListaPos{
-    friend TListaCalendario;
-    friend TNodoCalendario;
+    friend class TListaCalendario;
+    friend class TNodoCalendario;
     public:
         TListaPos();
         TListaPos(const TListaPos &);
@@ -36,9 +36,9 @@ class TListaPos{
 };
 
 class TListaCalendario{
-    friend TListaPos;
-    friend TNodoCalendario;
-    friend ostream& operator<<(ostream &, TListaCalendario&);
+    friend class TListaPos;
+    friend class TNodoCalendario;
+    friend ostream& operator<<(ostream &,const TListaCalendario&);
     public:
         TListaCalendario();
         TListaCalendario(const TListaCalendario &);
@@ -47,15 +47,16 @@ class TListaCalendario{
         bool operator==(const TListaCalendario&);
         TListaCalendario operator+(const TListaCalendario &);
         TListaCalendario operator-(const TListaCalendario &);
-        bool Insertar(TCalendario &);
-        bool Borrar(TCalendario &);
+        bool Insertar(const TCalendario &);
+        bool Borrar(const TCalendario &);
+        bool Borrar(TListaPos &);
         bool Borrar(int, int, int);
         bool EsVacia() const;
-        TCalendario Obtener(TListaPos &);
+        TCalendario Obtener(const TListaPos &)const ;
         bool Buscar(const TCalendario&) const;
         int Longitud() const;
         TListaPos Primera() const;
-        TListaPos Ultima();
+        TListaPos Ultima() const;
         TListaCalendario SumarSubl(int I_L1, int F_L1, TListaCalendario& L2, int I_L2,int F_L2);
         TListaCalendario ExtraerRango(int n1,int n2);
     private:
