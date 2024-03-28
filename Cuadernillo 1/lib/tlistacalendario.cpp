@@ -111,9 +111,11 @@ TListaCalendario::operator=(const TListaCalendario &tlc){
     if(this != &tlc){
         (*this).~TListaCalendario();
         TListaPos aux;
+
         if(!tlc.EsVacia()){
             TNodoCalendario *auxiliar = new TNodoCalendario();
-            this->primero = tlc.primero;
+            auxiliar->c = tlc.primero->c;
+            this->primero = auxiliar;
             aux = tlc.Primera();
             while(!aux.EsVacia()){
                 this->Insertar(aux.pos->c);
@@ -257,8 +259,26 @@ TListaCalendario::Borrar(TListaPos &tpos){
 
 bool 
 TListaCalendario::Borrar(int day, int month, int year){
-    TCalendario cal(day,month, year, (char*) "");
-    return this->Borrar(cal);
+    TCalendario cal(day,month,year, (char*) "");
+    TCalendario auxiliar;
+    TNodoCalendario *este = new TNodoCalendario();
+    TListaPos aux;
+    int count = 0;
+    aux = this->Primera();
+    while(!aux.EsVacia()&&aux.pos->c<cal){
+        if(aux.pos->c < cal){
+            count +=1;
+            auxiliar = aux.pos->c;
+            aux = aux.Siguiente();
+            this->Borrar(auxiliar);
+        }else{
+            aux = aux.Siguiente();  
+        }
+    }
+    if(count== 0){
+        return false;
+    }
+    return true;
 }
 
 bool 
@@ -349,7 +369,7 @@ TListaCalendario::SumarSubl(int I_L1, int F_L1, TListaCalendario& L2, int I_L2,i
         }
         TListaPos aux;
         aux = this->Primera();
-        for(int i=1;i<fpos;i++){
+        for(int i=1;i<=fpos;i++){
             if(i>=ipos){
                 suma.Insertar(aux.pos->c);
             }
@@ -367,7 +387,7 @@ TListaCalendario::SumarSubl(int I_L1, int F_L1, TListaCalendario& L2, int I_L2,i
         }
         TListaPos aux2;
         aux2 = L2.Primera();
-        for(int i=1;i<fpos2;i++){
+        for(int i=1;i<=fpos2;i++){
             if(i>=ipos2){
                 suma.Insertar(aux2.pos->c);
             }
