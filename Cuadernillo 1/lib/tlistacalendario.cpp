@@ -146,7 +146,7 @@ TListaCalendario::operator==(const TListaCalendario &comp){
 
 TListaCalendario
 TListaCalendario::operator+(const TListaCalendario &tlc){
-    TListaCalendario& respuesta = (*this);
+    TListaCalendario respuesta(*this);
     TListaPos este;
     este = tlc.Primera();
     
@@ -401,7 +401,7 @@ TListaCalendario::SumarSubl(int I_L1, int F_L1, TListaCalendario& L2, int I_L2,i
 TListaCalendario 
 TListaCalendario::ExtraerRango(int n1,int n2){
     TListaCalendario lista;
-    if(n1>n2){
+    if(n1>n2||n2<=0){
         return lista;
     }
     int ipos = n1;
@@ -414,13 +414,18 @@ TListaCalendario::ExtraerRango(int n1,int n2){
     }
     TListaPos aux;
     aux = this->Primera();
-    for (int i = 1; i < fpos; i++)
+    TCalendario auxiliar;
+    for (int i = 1; i <= fpos; i++)
     {
         if(i>=ipos){
-            lista.Insertar(aux.pos->c);
-            this->Borrar(aux.pos->c);
+            auxiliar = aux.pos->c;
+            lista.Insertar(auxiliar);
+            aux = aux.Siguiente();
+            this->Borrar(auxiliar);
         }
-        aux = aux.Siguiente();
+        else{
+            aux = aux.Siguiente();
+        }
     }
     return lista;
 }
