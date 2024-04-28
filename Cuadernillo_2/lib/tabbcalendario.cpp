@@ -24,9 +24,10 @@ TNodoABB::operator=(const TNodoABB &nodo)
         this->iz = nodo.iz;
         this->de = nodo.de;
     }
+    return *this;
 }
 
-void TABBCalendario::InordenAux(const TVectorCalendario &calvector, int &posicion) const
+void TABBCalendario::InordenAux(TVectorCalendario &calvector, int &posicion) const
 {
     if (!this->EsVacio())
     {
@@ -37,7 +38,7 @@ void TABBCalendario::InordenAux(const TVectorCalendario &calvector, int &posicio
     }
 }
 
-void TABBCalendario::PreordenAux(const TVectorCalendario &calvector, int &posicion) const
+void TABBCalendario::PreordenAux(TVectorCalendario &calvector, int &posicion) const
 {
     if (!this->EsVacio())
     {
@@ -47,7 +48,7 @@ void TABBCalendario::PreordenAux(const TVectorCalendario &calvector, int &posici
         this->raiz->de.PreordenAux(calvector, posicion);
     }
 }
-void TABBCalendario::PostordenAux(const TVectorCalendario &calvector, int &posicion) const
+void TABBCalendario::PostordenAux(TVectorCalendario &calvector, int &posicion) const
 {
     if (!this->EsVacio())
     {
@@ -130,13 +131,15 @@ bool TABBCalendario::Insertar(const TCalendario &calendario)
         nuevo->item = calendario;
         this->raiz = nuevo;
     }
-    if (calendario < this->raiz->item)
-    {
-        this->raiz->iz.Insertar(calendario);
-    }
-    else
-    {
-        this->raiz->de.Insertar(calendario);
+    else{
+        if (calendario < this->raiz->item)
+        {
+            this->raiz->iz.Insertar(calendario);
+        }
+        else
+        {
+            this->raiz->de.Insertar(calendario);
+        }
     }
 
     return true;
@@ -203,7 +206,7 @@ bool TABBCalendario::Borrar(const TCalendario &calendario)
     }
 }
 
-bool TABBCalendario::Buscar(const TCalendario &calendario)
+bool TABBCalendario::Buscar(const TCalendario &calendario) const
 {
     if (this->EsVacio())
     {
@@ -317,14 +320,34 @@ TABBCalendario::Niveles() const
 }
 
 TABBCalendario
-TABBCalendario::operator+(const TABBCalendario &)
+TABBCalendario::operator+(const TABBCalendario &otro)
 {
+    TABBCalendario copia(*this);
+    TVectorCalendario inorden = otro.Inorden();
+
+    for (int i = 0; i < inorden.Tamano(); i++)
+    {
+        copia.Insertar(inorden[i+1]);
+    }
+
+    return copia;
     
 }
 
 TABBCalendario
-TABBCalendario::operator-(const TABBCalendario &)
+TABBCalendario::operator-(const TABBCalendario &otro)
 {
+    TABBCalendario copia;
+    TVectorCalendario inorden = this->Inorden();
+
+    for (int i = 0; i < inorden.Tamano(); i++)
+    {
+        if(!otro.Buscar(inorden[i+1])){
+            copia.Insertar(inorden[i+1]);
+        }
+    }
+
+    return copia;
 }
 
 ostream &
