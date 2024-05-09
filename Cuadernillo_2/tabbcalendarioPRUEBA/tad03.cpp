@@ -1,33 +1,34 @@
 #include <iostream>
 #include "tabbcalendario.h"
-
 using namespace std;
 
 int
 main(void)
 {
-  TABBCalendario a;
-  TCalendario c1(1, 1,2000,(char *)"fecha"), c2(2, 2,2000,(char *)"fecha"), c3(3, 3,2000,(char *)"fecha");
-  TCalendario c4(4,4,2000,(char *)"fecha");
+/****************************************************/
+/***************** CONSTRUCTOR DE COPIA, "=", "==" */
+/***************************************************/
+  TABBCalendario a,c;
 
-  a.Insertar(c1);
+  TCalendario c1(1,1,2011,"Fecha 1");
+  TCalendario c2(2,1,2011,"Fecha 2");
+  TCalendario c3(3,1,2011,"Fecha 3");
+
   a.Insertar(c2);
+  a.Insertar(c1);
   a.Insertar(c3);
-
-  if (a.Borrar(c4))
-    cout<<"Borra algo" <<endl;
-  else
-    cout<<"No borra nada"<<endl;
-    
-  if (a.Borrar(c1))
-    cout<<"Borra algo"<<endl;
-  else
-    cout<<"No borra nada"<<endl;
-
-  if (a.Borrar(c1))
-    cout<<"Borra algo"<<endl;
-  else
-    cout<<"No borra nada"<<endl;
+  TABBCalendario b(a);
+  c=b;
   
+  if ( a==b )
+  	cout << "IGUALES" << endl;
+  else 
+	cout << "DISTINTOS" << endl;
+
+  if ( c==b )
+  	cout << "IGUALES" << endl;
+  else 
+	cout << "DISTINTOS" << endl;
+
   return 0;
 }

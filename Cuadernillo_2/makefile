@@ -18,7 +18,7 @@ doc:
 	doxygen
 
 tar:
-	tar cvfz PRACTICA.tgz lib/ include/ src/ nombre.txt
+	tar cvfz PRACTICA.tgz lib/ include/ src/ nombres.txt
 
 
 clean:

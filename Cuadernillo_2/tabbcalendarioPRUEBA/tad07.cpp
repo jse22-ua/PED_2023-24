@@ -1,34 +1,45 @@
 #include <iostream>
 #include "tabbcalendario.h"
-
 using namespace std;
 
 int
 main(void)
 {
-  TABBCalendario a,b,c;
-  TCalendario c1(1, 1,2000,(char *)"fecha"),c2;
-  int i;
-  
-  for (i=1; i<=300; i++)
-  {
-      c1.ModFecha(1,1,2000+i);
-      a.Insertar(c1);
-      b.Insertar(c1);
-      c.Insertar(c1);
-  }
-      
-  cout<<"Altura="<<a.Altura()<<endl;
-  cout<<"Altura="<<b.Altura()<<endl;
-  cout<<"Altura="<<c.Altura()<<endl;
-  
-  cout<<"Nodos="<<a.Nodos()<<endl;
-  cout<<"NodosHoja="<<a.NodosHoja()<<endl; 
-  cout<<"Nodos="<<b.Nodos()<<endl;
-  cout<<"NodosHoja="<<c.NodosHoja()<<endl; 
-  cout<<"Nodos="<<c.Nodos()<<endl;
-  cout<<"NodosHoja="<<c.NodosHoja()<<endl; 
-  
+/************************************************/
+/***************** INORDEN, "=="                */
+/************************************************/
 
-  return 0;
+  TABBCalendario a,b;
+  TVectorCalendario vec, vec2;
+
+  TCalendario c1(1,1,2011,"Fecha1");
+  TCalendario c2(2,1,2011,"Fecha2");
+  TCalendario c3(3,1,2011,"Fecha3");
+  TCalendario c4(4,1,2011,"Fecha4");
+  TCalendario c5(5,1,2011,"Fecha5");
+  TCalendario c6(6,1,2011,"Fecha6");
+
+  a.Insertar(c5);
+  a.Insertar(c2);
+  a.Insertar(c1);
+  a.Insertar(c3);
+  a.Insertar(c6);
+
+
+  vec = a.Inorden();
+  b = a;
+ 
+  vec2 = b.Inorden();
+  if ( vec == vec2 ) 
+	{cout << "IGUALES"<< endl;}
+  else 
+	{cout << "NO IGUALES"<< endl;}
+
+  vec2 = b.Preorden();
+  if ( vec == vec2 ) 
+	{cout << "IGUALES"<< endl;}
+  else 
+	{cout << "NO IGUALES"<< endl;}
+
+  return 0; 
 }
