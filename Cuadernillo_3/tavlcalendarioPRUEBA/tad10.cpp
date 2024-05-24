@@ -1,5 +1,5 @@
 /************************************************************
-** BORRAR CON ROTACION II
+** BORRAR CON ROTACION DD
 *************************************************************/
 #include <iostream>
 #include "tavlcalendario.h"
@@ -19,17 +19,17 @@ main()
   TCalendario c5(5,5,2011,(char *)"cinco");
   TCalendario c6(6,6,2011,(char *)"seis");
 
-  arb1.Insertar(c6);
-  arb1.Insertar(c4);
+  arb1.Insertar(c5);
   arb1.Insertar(c2);
   arb1.Insertar(c1);
   arb1.Insertar(c3);
+  arb1.Insertar(c6);
  cout<<arb1.Preorden()<<endl;
- if (arb1.Borrar(c5))
+ if (arb1.Borrar(c4))
   	cout<<"Elemento borrado"<<endl;
  else cout<<"Elemento no borrado"<<endl;
  
- if (arb1.Borrar(c6))
+ if (arb1.Borrar(c1))
   	cout<<"Elemento borrado"<<endl;
   else cout<<"Elemento no borrado"<<endl;
  

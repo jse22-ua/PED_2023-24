@@ -11,7 +11,7 @@ using namespace std;
 class TNodoAVL;
 
 class TAVLCalendario{
-    friend class TNodoABB;
+    friend class TNodoAVL;
     friend ostream & operator<<(ostream&, const TAVLCalendario&);
     public:
         TAVLCalendario();
@@ -36,6 +36,7 @@ class TAVLCalendario{
         TNodoAVL *raiz;
         void AuxiliarConstructor(const TAVLCalendario&);
         TCalendario getMayorIzquierda();
+        void calcularFe();
         void InordenAux(TVectorCalendario &, int &) const;
         void PreordenAux(TVectorCalendario &, int &) const;
         void PostordenAux(TVectorCalendario &, int &) const;

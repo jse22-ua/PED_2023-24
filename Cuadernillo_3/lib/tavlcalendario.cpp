@@ -110,6 +110,11 @@ bool TAVLCalendario::operator==(const TAVLCalendario &arbol) const
     return this->Inorden() == arbol.Inorden();
 }
 
+bool TAVLCalendario::operator!=(const TAVLCalendario &arbol) const
+{
+    return this->Inorden() != arbol.Inorden();
+}
+
 bool TAVLCalendario::EsVacio() const
 {
     if (this->raiz == NULL)
@@ -119,30 +124,101 @@ bool TAVLCalendario::EsVacio() const
     return false;
 }
 
+void TAVLCalendario::calcularFe()
+{
+    int derecha = this->raiz->de.Altura();
+    int izquierda = this->raiz->iz.Altura();
+    this->raiz->fe = derecha - izquierda;
+}
+
 bool TAVLCalendario::Insertar(const TCalendario &calendario)
 {
-    if (this->Buscar(calendario))
-    {
-        return false;
-    }
+    bool insertado = false;
     if (this->EsVacio())
     {
         TNodoAVL *nuevo = new TNodoAVL();
         nuevo->item = calendario;
         this->raiz = nuevo;
+        insertado = true;
     }
-    else{
-        if (calendario < this->raiz->item)
+    else
+    {
+        if (calendario == this->raiz->item)
         {
-            this->raiz->iz.Insertar(calendario);
+            insertado = false;
+        }
+        else if (calendario < this->raiz->item)
+        {
+            insertado = this->raiz->iz.Insertar(calendario);
         }
         else
         {
-            this->raiz->de.Insertar(calendario);
+            insertado = this->raiz->de.Insertar(calendario);
+        }
+        if (insertado)
+        {
+            calcularFe();
+            /*this->raiz->de.calcularFe();
+            this->raiz->iz.calcularFe();
+            */
+            if (this->raiz->fe == -2)
+            {
+                this->raiz->iz.calcularFe();
+                if (this->raiz->iz.raiz->fe == -1)
+                {
+                    // II
+                    TNodoAVL *aux1 = new TNodoAVL(*this->raiz);
+                    TNodoAVL *aux2 = new TNodoAVL(*this->raiz->iz.raiz);
+
+                    aux1->iz.raiz = aux2->de.raiz;
+                    aux2->de.raiz = aux1;
+                    this->raiz = aux2;
+                }
+                else
+                {
+                    // ID
+                    TNodoAVL *f = new TNodoAVL(*this->raiz);
+                    TNodoAVL *b = new TNodoAVL(*this->raiz->iz.raiz);
+                    TNodoAVL *d = new TNodoAVL(*this->raiz->iz.raiz->de.raiz);
+
+                    f->iz.raiz = d->de.raiz;
+                    b->de.raiz = d->iz.raiz;
+                    d->iz.raiz = b;
+                    d->de.raiz = f;
+                    this->raiz = d;
+                }
+            }
+            if (this->raiz->fe == 2)
+            {
+                this->raiz->de.calcularFe();
+                if (this->raiz->de.raiz->fe == 1)
+                {
+                    // DD
+                    TNodoAVL *aux1 = new TNodoAVL(*this->raiz);
+                    TNodoAVL *aux2 = new TNodoAVL(*this->raiz->de.raiz);
+
+                    aux1->de.raiz = aux2->iz.raiz;
+                    aux2->iz.raiz = aux1;
+                    this->raiz = aux2;
+                }
+                else
+                {
+                    // DI
+                    TNodoAVL *f = new TNodoAVL(*this->raiz);
+                    TNodoAVL *b = new TNodoAVL(*this->raiz->de.raiz);
+                    TNodoAVL *d = new TNodoAVL(*this->raiz->de.raiz->iz.raiz);
+
+                    f->iz.raiz = d->de.raiz;
+                    b->de.raiz = d->iz.raiz;
+                    d->iz.raiz = b;
+                    d->de.raiz = f;
+                    this->raiz = d;
+                }
+            }
         }
     }
 
-    return true;
+    return insertado;
 }
 
 TCalendario TAVLCalendario::getMayorIzquierda()
@@ -164,46 +240,109 @@ TCalendario TAVLCalendario::getMayorIzquierda()
 
 bool TAVLCalendario::Borrar(const TCalendario &calendario)
 {
-    if (!this->Buscar(calendario))
+    bool borrado = false;
+    if (this->EsVacio())
     {
-        return false;
+        borrado = false;
     }
     else if (this->raiz->item == calendario)
     {
         if (this->raiz->de.EsVacio() && this->raiz->iz.EsVacio())
         {
             this->raiz = NULL;
-            return true;
+            borrado = true;
         }
         else if (!this->raiz->de.EsVacio() && this->raiz->iz.EsVacio())
         {
             this->raiz = this->raiz->de.raiz;
-            return true;
+            borrado = true;
         }
         else if (this->raiz->de.EsVacio() && !this->raiz->iz.EsVacio())
         {
             this->raiz = this->raiz->iz.raiz;
-            return true;
+            borrado = true;
         }
         else
         {
             TCalendario auxiliar = this->raiz->iz.getMayorIzquierda();
             this->raiz->item = auxiliar;
             this->raiz->iz.Borrar(auxiliar);
-            return true;
+            borrado = true;
         }
     }
     else
     {
         if (this->raiz->item < calendario)
         {
-            return this->raiz->de.Borrar(calendario);
+            borrado = this->raiz->de.Borrar(calendario);
         }
         else
         {
-            return this->raiz->iz.Borrar(calendario);
+            borrado = this->raiz->iz.Borrar(calendario);
         }
     }
+    if (borrado)
+    {
+        calcularFe();
+        /*this->raiz->de.calcularFe();
+        this->raiz->iz.calcularFe();
+        */
+        if (this->raiz->fe == -2)
+        {
+            this->raiz->iz.calcularFe();
+            if (this->raiz->iz.raiz->fe == -1)
+            {
+                // II
+                TNodoAVL *aux1 = new TNodoAVL(*this->raiz);
+                TNodoAVL *aux2 = new TNodoAVL(*this->raiz->iz.raiz);
+
+                aux1->iz.raiz = aux2->de.raiz;
+                aux2->de.raiz = aux1;
+                this->raiz = aux2;
+            }
+            else
+            {
+                // ID
+                TNodoAVL *f = new TNodoAVL(*this->raiz);
+                TNodoAVL *b = new TNodoAVL(*this->raiz->iz.raiz);
+                TNodoAVL *d = new TNodoAVL(*this->raiz->iz.raiz->de.raiz);
+
+                f->iz.raiz = d->de.raiz;
+                b->de.raiz = d->iz.raiz;
+                d->iz.raiz = b;
+                d->de.raiz = f;
+                this->raiz = d;
+            }
+        }
+        if (this->raiz->fe == 2)
+        {
+            this->raiz->de.calcularFe();
+            if (this->raiz->de.raiz->fe == 1)
+            {
+                // DD
+                TNodoAVL *aux1 = new TNodoAVL(*this->raiz);
+                TNodoAVL *aux2 = new TNodoAVL(*this->raiz->de.raiz);
+
+                aux1->de.raiz = aux2->iz.raiz;
+                aux2->iz.raiz = aux1;
+                this->raiz = aux2;
+            }
+            else
+            {
+                // DI
+                TNodoAVL *f = new TNodoAVL(*this->raiz);
+                TNodoAVL *b = new TNodoAVL(*this->raiz->de.raiz);
+                TNodoAVL *d = new TNodoAVL(*this->raiz->de.raiz->iz.raiz);
+
+                f->iz.raiz = d->de.raiz;
+                b->de.raiz = d->iz.raiz;
+                d->iz.raiz = b;
+                d->de.raiz = f;
+                this->raiz = d;
+            }
+        }
+    }
+    return borrado;
 }
 
 bool TAVLCalendario::Buscar(const TCalendario &calendario) const
@@ -231,7 +370,8 @@ TCalendario TAVLCalendario::Raiz() const
 
 int TAVLCalendario::Altura()
 {
-    if(this->EsVacio()){
+    if (this->EsVacio())
+    {
         return 0;
     }
     return 1 + max(this->raiz->de.Altura(), this->raiz->iz.Altura());
@@ -239,7 +379,8 @@ int TAVLCalendario::Altura()
 
 int TAVLCalendario::Nodos() const
 {
-    if(this->EsVacio()){
+    if (this->EsVacio())
+    {
         return 0;
     }
     return 1 + this->raiz->iz.Nodos() + this->raiz->de.Nodos();
@@ -247,7 +388,8 @@ int TAVLCalendario::Nodos() const
 
 int TAVLCalendario::NodosHoja()
 {
-    if(this->EsVacio()){
+    if (this->EsVacio())
+    {
         return 0;
     }
     if (this->raiz->de.EsVacio() && this->raiz->iz.EsVacio())
@@ -293,7 +435,7 @@ TAVLCalendario::Postorden()
 TVectorCalendario
 TAVLCalendario::Niveles() const
 {
-    queue<TNodoAVL*> cola;
+    queue<TNodoAVL *> cola;
     TVectorCalendario niveles(this->Nodos());
     if (!this->EsVacio())
     {
@@ -301,7 +443,7 @@ TAVLCalendario::Niveles() const
         cola.push(this->raiz);
         while (!cola.empty())
         {
-            TNodoAVL* este = cola.front();
+            TNodoAVL *este = cola.front();
             niveles[i] = este->item;
             cola.pop();
 
@@ -318,7 +460,6 @@ TAVLCalendario::Niveles() const
     }
     return niveles;
 }
-
 
 ostream &
 operator<<(ostream &os, const TAVLCalendario &aux)
