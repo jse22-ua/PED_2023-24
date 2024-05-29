@@ -1,40 +1,53 @@
+/************************************************************
+** CONSTRUCTOR COPIA, =
+*************************************************************/
 #include <iostream>
-#include "tabbcalendario.h"
+#include "tavlcalendario.h"
 #include "tcalendario.h"
-#include "tvectorcalendario.h"
+
 using namespace std;
 
 int
 main(void)
 {
-/************************************************/
-/***************** INORDEN, PREORDEN, POSTORDEN */
-/************************************************/
+  TAVLCalendario a,b;
+  TCalendario cal1(1,1,2011,(char *)"uno");
+  TCalendario cal2(2,1,2011,(char *)"dos");
+  TCalendario cal3(3,1,2011,(char *)"tres");
+  TCalendario cal4(4,1,2011,(char *)"cuatro");
+  TCalendario cal5(5,1,2011,(char *)"cinco");
 
+  a.Insertar(cal1);
+  a.Insertar(cal2);
+  a.Insertar(cal3);
+  a.Insertar(cal4);
+  TAVLCalendario c(a);
+  
+  b.Insertar(cal1);
+  b.Insertar(cal2);
+  b.Insertar(cal3);
+  b.Insertar(cal4);
 
-TABBCalendario a;
-TVectorCalendario vec1, vec2, vec3;
+  if ( a==c )
+  	cout << "IGUALES" << endl;
+  else 
+	cout << "DISTINTOS" << endl;
 
-TCalendario c1(1,1,2011,(char*) "Fecha1");
-TCalendario c2(2,1,2011,(char*) "Fecha2");
-TCalendario c3(3,1,2011,(char*) "Fecha3");
-TCalendario c4(4,1,2011,(char*) "Fecha4");
-TCalendario c5(5,1,2011,(char*) "Fecha5");
-TCalendario c6(6,1,2011,(char*) "Fecha6");
+  if ( c==b )
+  	cout << "IGUALES" << endl;
+  else 
+	cout << "DISTINTOS" << endl;
 
-a.Insertar(c5);
-a.Insertar(c2);
-a.Insertar(c1);
-a.Insertar(c3);
-a.Insertar(c6);
+  b = a;
+cout << b.Preorden() <<endl;
+  a.Insertar(cal5);
+  if ( a==b )
+  	cout << "IGUALES" << endl;
+  else 
+	cout << "DISTINTOS" << endl;
 
-vec1 = a.Inorden();
-vec2 = a.Preorden();
-vec3 = a.Postorden();
-
-cout << "Inorden: " << vec1 << endl;
-cout << "Preorden: " << vec2 << endl;
-cout << "Postorden: " << vec3 << endl;
-
-return 0; 
+  cout << "Altura: " << b.Altura() << endl;
+  cout << b.Preorden() <<endl;
+ return 0;
 }
+

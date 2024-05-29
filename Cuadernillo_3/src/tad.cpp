@@ -1,42 +1,34 @@
-/************************************************************
-** BORRAR CON ROTACION II
-*************************************************************/
 #include <iostream>
 #include "tavlcalendario.h"
 
 using namespace std;
 
 int
-main()
+main(void)
 {
-  TAVLCalendario arb1, arb2;
-  TVectorCalendario vec, vec2;
+  TAVLCalendario a;
+  TCalendario c1(1,1,2000,(char *)"fecha"),c2(2,2,2000,(char *)"fecha"),c3(3,3,2000,(char *)"fecha"),c4(4,4,2000,(char *)"fecha"),c5(5,5,2000,(char *)"fecha"),c6(6,6,2000,(char *)"fecha"),c7(7,7,2000,(char *)"fecha"),c8(8,8,2000,(char *)"fecha"),c9(9,9,2000,(char *)"fecha"),c10(10,10,2000,(char *)"fecha");
+  TCalendario c11(11,11,2000,(char *)"fecha"),c12(12,12,2000,(char *)"fecha"),c13(13,12,2000,(char *)"fecha"),c14(14,12,2000,(char *)"fecha"),c15(15,12,2000,(char *)"fecha"),c16(16,12,2000,(char *)"fecha");
+  TCalendario c17(17,12,2000,(char *)"fecha"),c18(18,12,2000,(char *)"fecha"),c19(19,12,2000,(char *)"fecha"),c20(20,12,2000,(char *)"fecha");
 
-  TCalendario c1(1,1,2011,(char *)"uno");
-  TCalendario c2(2,2,2011,(char *)"dos");
-  TCalendario c3(3,3,2011,(char *)"tres");
-  TCalendario c4(4,4,2011,(char *)"cuatro");
-  TCalendario c5(5,5,2011,(char *)"cinco");
-  TCalendario c6(6,6,2011,(char *)"seis");
+  if (a.Borrar(c1))
+	cout<<"Elemento borrado"<<endl;
+  else
+	cout<<"Elemento no borrado"<<endl;
 
-  arb1.Insertar(c6);
-  arb1.Insertar(c4);
-  arb1.Insertar(c2);
-  arb1.Insertar(c1);
-  arb1.Insertar(c3);
- cout<<arb1.Preorden()<<endl;
- if (arb1.Borrar(c5))
-  	cout<<"Elemento borrado"<<endl;
- else cout<<"Elemento no borrado"<<endl;
- 
- if (arb1.Borrar(c6))
-  	cout<<"Elemento borrado"<<endl;
-  else cout<<"Elemento no borrado"<<endl;
- 
- cout<<arb1.Raiz()<<endl;
- cout<<arb1.Preorden()<<endl;
- cout<<arb1.Inorden()<<endl;
- cout<<arb1.Postorden()<<endl;
   
+  a.Insertar(c1);
+  
+  if (a.Borrar(c2))
+	cout<<"Elemento borrado"<<endl;
+  else
+	cout<<"Elemento no borrado"<<endl;
+	
+   if (a.Borrar(c1))
+	cout<<"Elemento borrado"<<endl;
+  else
+	cout<<"Elemento no borrado"<<endl;
+	
+  cout <<"preorden="<< a.Preorden()<< endl;
   return 0;
 }

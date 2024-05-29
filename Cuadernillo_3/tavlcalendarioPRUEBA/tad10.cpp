@@ -1,42 +1,37 @@
-/************************************************************
-** BORRAR CON ROTACION DD
-*************************************************************/
 #include <iostream>
 #include "tavlcalendario.h"
 
 using namespace std;
 
 int
-main()
+main(void)
 {
-  TAVLCalendario arb1, arb2;
-  TVectorCalendario vec, vec2;
-
-  TCalendario c1(1,1,2011,(char *)"uno");
-  TCalendario c2(2,2,2011,(char *)"dos");
-  TCalendario c3(3,3,2011,(char *)"tres");
-  TCalendario c4(4,4,2011,(char *)"cuatro");
-  TCalendario c5(5,5,2011,(char *)"cinco");
-  TCalendario c6(6,6,2011,(char *)"seis");
-
-  arb1.Insertar(c5);
-  arb1.Insertar(c2);
-  arb1.Insertar(c1);
-  arb1.Insertar(c3);
-  arb1.Insertar(c6);
- cout<<arb1.Preorden()<<endl;
- if (arb1.Borrar(c4))
-  	cout<<"Elemento borrado"<<endl;
- else cout<<"Elemento no borrado"<<endl;
- 
- if (arb1.Borrar(c1))
-  	cout<<"Elemento borrado"<<endl;
-  else cout<<"Elemento no borrado"<<endl;
- 
- cout<<arb1.Raiz()<<endl;
- cout<<arb1.Preorden()<<endl;
- cout<<arb1.Inorden()<<endl;
- cout<<arb1.Postorden()<<endl;
+  TAVLCalendario a,b;
+  TCalendario c4(4,4,2000,(char *)"fecha"),c8(8,8,2000,(char *)"fecha"),c9(9,9,2000,(char *)"fecha"),c10(10,10,2000,(char *)"fecha"),c11(11,11,2000,(char *)"fecha"),c12(12,12,2000,(char *)"fecha"),c14(14,12,2000,(char *)"fecha");
+  TVectorCalendario v1,v2,v3,v4;
   
+  a.Insertar(c8);
+  a.Insertar(c12);
+  a.Insertar(c4);
+  a.Insertar(c9);
+  a.Insertar(c14);
+  a.Insertar(c10);
+
+  b.Insertar(c8);
+  b.Insertar(c12);
+  b.Insertar(c4);
+  b.Insertar(c9);
+  b.Insertar(c14);
+  b.Insertar(c11);
+ 
+  if (a==b)
+    cout<<"iguales"<<endl;
+  else
+    cout<<"diferentes"<<endl;
+
+  if (a!=b)
+    cout<<"diferentes"<<endl;
+  else
+    cout<<"iguales"<<endl;
   return 0;
 }

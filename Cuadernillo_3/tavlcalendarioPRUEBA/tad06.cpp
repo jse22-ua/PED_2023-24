@@ -1,39 +1,28 @@
-/************************************************************
-** ALTURA, NODOS, NODOSHOJA, =, != 
-*************************************************************/
 #include <iostream>
 #include "tavlcalendario.h"
 
 using namespace std;
 
 int
-main()
+main(void)
 {
-  TAVLCalendario arb1, arb2;
-
-  TCalendario bd(1,1,2011,(char *)"uno");
-  TCalendario bc(2,2,2011,(char *)"dos");
-  TCalendario be(3,3,2011,(char *)"tres");
-  TCalendario bn(4,4,2011,(char *)"cuatro");
-  TCalendario ba(5,5,2011,(char *)"cinco");
-  TCalendario bm(6,6,2011,(char *)"seis");
-
-  arb1.Insertar(ba);
-  arb1.Insertar(bc);
-  arb1.Insertar(bd);
-  arb1.Insertar(be);
-  arb1.Insertar(bm);
+  TAVLCalendario a;
+  TCalendario ca4(4,4,2000,(char *)"fecha"),ca6(6,6,2000,(char *)"fecha"),ca8(8,8,2000,(char *)"fecha"),ca9(9,9,2000,(char *)"fecha"),ca10(10,10,2000,(char *)"fecha"),ca11(11,11,2000,(char *)"fecha"),ca12(12,12,2000,(char *)"fecha"),ca14(14,12,2000,(char *)"fecha"),ca16(16,12,2000,(char *)"fecha");
   
-
-  arb2 = arb1;
-  if(arb2 != arb1)
-    cout << "No iguales" <<endl;
-  else
-    cout << "Iguales" << endl;
-
-  cout << "Altura: " << arb2.Altura() << endl;
-  cout << "Nodos: " << arb2.Nodos() << endl;
-  cout << "NodosHoja: " << arb2.NodosHoja() << endl;
-
-  return 0;
+  
+  a.Insertar(ca8);
+  a.Insertar(ca12);
+  a.Insertar(ca4);
+  a.Insertar(ca9);
+  a.Insertar(ca14);
+  a.Insertar(ca16);
+  a.Insertar(ca11);
+  a.Insertar(ca6);
+  a.Insertar(ca10);
+  cout<<"inorden="<<a.Inorden()<<endl;
+  cout<<"postorden="<<a.Postorden()<<endl;
+  cout<<"preorden="<<a.Preorden()<<endl;
+  cout<<"altura="<<a.Altura()<<endl;
+  cout<<"nodos hoja="<<a.NodosHoja()<<endl;
+  cout<<"raiz="<<a.Raiz()<<endl;
 }

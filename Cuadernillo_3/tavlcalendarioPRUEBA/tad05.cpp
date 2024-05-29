@@ -1,6 +1,3 @@
-/************************************************************
-** INORDEN, PREORDEN Y POSTORDEN
-*************************************************************/
 #include <iostream>
 #include "tavlcalendario.h"
 
@@ -10,25 +7,24 @@ int
 main(void)
 {
   TAVLCalendario a;
-  TCalendario d1(1,1,2011,(char *)"uno");
-  TCalendario d2(2,2,2011,(char *)"dos");
-  TCalendario d3(3,3,2011,(char *)"tres");
-  TCalendario d4(4,4,2011,(char *)"cuatro");
+  TCalendario ca4(4,4,2000,(char *)"fecha"),ca8(8,8,2000,(char *)"fecha"),ca9(9,9,2000,(char *)"fecha"),ca10(10,10,2000,(char *)"fecha"),ca12(12,12,2000,(char *)"fecha"),ca14(14,12,2000,(char *)"fecha");
+  TVectorCalendario v1,v2,v3;
+  
+  a.Insertar(ca8);
+  a.Insertar(ca12);
+  a.Insertar(ca4);
+  a.Insertar(ca9);
+  a.Insertar(ca14);
+  a.Insertar(ca10);
 
-  TVectorCalendario v;
+  v1=a.Inorden();
+  v2=a.Postorden();
+  v3=a.Preorden();
 
-  a.Insertar(d4);
-  a.Insertar(d3);
-  a.Insertar(d2);
-  a.Insertar(d1);
-
-  v = a.Inorden();
-  cout << "Inorden: " << v << endl;
-
-  v = a.Preorden();
-  cout << "Preorden: " << v << endl;
-
-  v = a.Postorden();
-  cout << "Postorden: " << v << endl;
+  cout<<"inorden="<<v1<<endl;
+  cout<<"postorden="<<v2<<endl;
+  cout<<"preorden="<<v3<<endl;
+  cout<<"altura="<<a.Altura()<<endl;
+  cout<<"nodos hoja="<<a.NodosHoja()<<endl;
   return 0;
 }

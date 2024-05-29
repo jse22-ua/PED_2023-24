@@ -126,9 +126,12 @@ bool TAVLCalendario::EsVacio() const
 
 void TAVLCalendario::calcularFe()
 {
-    int derecha = this->raiz->de.Altura();
-    int izquierda = this->raiz->iz.Altura();
-    this->raiz->fe = derecha - izquierda;
+    if(!this->EsVacio()){
+        int derecha = this->raiz->de.Altura();
+        int izquierda = this->raiz->iz.Altura();
+        this->raiz->fe = derecha - izquierda;
+    }
+
 }
 
 bool TAVLCalendario::Insertar(const TCalendario &calendario)
@@ -145,7 +148,7 @@ bool TAVLCalendario::Insertar(const TCalendario &calendario)
     {
         if (calendario == this->raiz->item)
         {
-            insertado = false;
+            return false;
         }
         else if (calendario < this->raiz->item)
         {
@@ -155,9 +158,9 @@ bool TAVLCalendario::Insertar(const TCalendario &calendario)
         {
             insertado = this->raiz->de.Insertar(calendario);
         }
+        calcularFe();
         if (insertado)
         {
-            calcularFe();
             /*this->raiz->de.calcularFe();
             this->raiz->iz.calcularFe();
             */
@@ -204,12 +207,12 @@ bool TAVLCalendario::Insertar(const TCalendario &calendario)
                 else
                 {
                     // DI
-                    TNodoAVL *f = new TNodoAVL(*this->raiz);
-                    TNodoAVL *b = new TNodoAVL(*this->raiz->de.raiz);
+                    TNodoAVL *b = new TNodoAVL(*this->raiz);
+                    TNodoAVL *f = new TNodoAVL(*this->raiz->de.raiz);
                     TNodoAVL *d = new TNodoAVL(*this->raiz->de.raiz->iz.raiz);
 
-                    f->iz.raiz = d->de.raiz;
                     b->de.raiz = d->iz.raiz;
+                    f->iz.raiz = d->de.raiz;
                     d->iz.raiz = b;
                     d->de.raiz = f;
                     this->raiz = d;
@@ -241,9 +244,12 @@ TCalendario TAVLCalendario::getMayorIzquierda()
 bool TAVLCalendario::Borrar(const TCalendario &calendario)
 {
     bool borrado = false;
+    if(!Buscar(calendario)){
+        
+    }
     if (this->EsVacio())
     {
-        borrado = false;
+        
     }
     else if (this->raiz->item == calendario)
     {
@@ -281,24 +287,24 @@ bool TAVLCalendario::Borrar(const TCalendario &calendario)
             borrado = this->raiz->iz.Borrar(calendario);
         }
     }
-    if (borrado)
+    calcularFe();
+    if (borrado&&!this->EsVacio())
     {
-        calcularFe();
         /*this->raiz->de.calcularFe();
         this->raiz->iz.calcularFe();
         */
         if (this->raiz->fe == -2)
         {
             this->raiz->iz.calcularFe();
-            if (this->raiz->iz.raiz->fe == -1)
+            if (this->raiz->iz.raiz->fe <= 0)
             {
                 // II
-                TNodoAVL *aux1 = new TNodoAVL(*this->raiz);
-                TNodoAVL *aux2 = new TNodoAVL(*this->raiz->iz.raiz);
+                TNodoAVL *d = new TNodoAVL(*this->raiz);
+                TNodoAVL *b = new TNodoAVL(*this->raiz->iz.raiz);
 
-                aux1->iz.raiz = aux2->de.raiz;
-                aux2->de.raiz = aux1;
-                this->raiz = aux2;
+                d->iz.raiz = b->de.raiz;
+                b->de.raiz = d;
+                this->raiz = b;
             }
             else
             {
@@ -317,25 +323,25 @@ bool TAVLCalendario::Borrar(const TCalendario &calendario)
         if (this->raiz->fe == 2)
         {
             this->raiz->de.calcularFe();
-            if (this->raiz->de.raiz->fe == 1)
+            if (this->raiz->de.raiz->fe >= 0)
             {
                 // DD
-                TNodoAVL *aux1 = new TNodoAVL(*this->raiz);
-                TNodoAVL *aux2 = new TNodoAVL(*this->raiz->de.raiz);
+                TNodoAVL *b = new TNodoAVL(*this->raiz);
+                TNodoAVL *d = new TNodoAVL(*this->raiz->de.raiz);
 
-                aux1->de.raiz = aux2->iz.raiz;
-                aux2->iz.raiz = aux1;
-                this->raiz = aux2;
+                b->de.raiz = d->iz.raiz;
+                d->iz.raiz = b;
+                this->raiz = d;
             }
             else
             {
                 // DI
-                TNodoAVL *f = new TNodoAVL(*this->raiz);
-                TNodoAVL *b = new TNodoAVL(*this->raiz->de.raiz);
+                TNodoAVL *b = new TNodoAVL(*this->raiz);
+                TNodoAVL *f = new TNodoAVL(*this->raiz->de.raiz);
                 TNodoAVL *d = new TNodoAVL(*this->raiz->de.raiz->iz.raiz);
 
-                f->iz.raiz = d->de.raiz;
                 b->de.raiz = d->iz.raiz;
+                f->iz.raiz = d->de.raiz;
                 d->iz.raiz = b;
                 d->de.raiz = f;
                 this->raiz = d;

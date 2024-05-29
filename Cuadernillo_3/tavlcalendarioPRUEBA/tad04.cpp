@@ -1,6 +1,3 @@
-/************************************************************
-** ALTURA, NODOS, NODOSHOJA CON 1 ELEMENTO
-*************************************************************/
 #include <iostream>
 #include "tavlcalendario.h"
 
@@ -10,12 +7,23 @@ int
 main(void)
 {
   TAVLCalendario a;
-  TCalendario cal(1,1,2011,(char *)"uno");
+  TCalendario ca3(3,3,2000,(char *)"fecha"),ca5(5,5,2000,(char *)"fecha"),ca9(9,9,2000,(char *)"fecha"),ca12(12,12,2000,(char *)"fecha"),ca10(10,10,2000,(char *)"fecha");
+  TVectorCalendario v1,v2,v3;
+  
+  a.Insertar(ca10);
+  a.Insertar(ca12);
+  a.Insertar(ca9);
+  a.Insertar(ca5);
+  a.Insertar(ca3);
 
-  a.Insertar(cal);
+  v1=a.Inorden();
+  v2=a.Postorden();
+  v3=a.Preorden();
 
-  cout << "Altura: " << a.Altura() << endl;
-  cout << "Nodos: " << a.Nodos() << endl;
-  cout << "NodosHoja: " << a.NodosHoja() << endl;
- return 0;
+  cout<<"inorden="<<v1<<endl;
+  cout<<"postorden="<<v2<<endl;
+  cout<<"preorden="<<v3<<endl;
+  cout<<"altura="<<a.Altura()<<endl;
+  cout<<"nodos hoja="<<a.NodosHoja()<<endl;
+return 0;
 }

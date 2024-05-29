@@ -1,6 +1,3 @@
-/************************************************************
-** CONSTRUCTOR COPIA, =
-*************************************************************/
 #include <iostream>
 #include "tavlcalendario.h"
 
@@ -9,43 +6,17 @@ using namespace std;
 int
 main(void)
 {
-  TAVLCalendario a,b;
-  TCalendario cal1(1,1,2011,(char *)"uno");
-  TCalendario cal2(2,1,2011,(char *)"dos");
-  TCalendario cal3(3,1,2011,(char *)"tres");
-  TCalendario cal4(4,1,2011,(char *)"cuatro");
-  TCalendario cal5(5,1,2011,(char *)"cinco");
-
-  a.Insertar(cal1);
-  a.Insertar(cal2);
-  a.Insertar(cal3);
-  a.Insertar(cal4);
-  TAVLCalendario c(a);
+  TAVLCalendario a,b(a),c(a);
+  TCalendario ca1(1,1,2000,(char *)"fecha"),ca2(2,2,2000,(char *)"fecha"),ca3(3,3,2000,(char *)"fecha");
+  TVectorCalendario v1,v2,v3;
   
-  b.Insertar(cal1);
-  b.Insertar(cal2);
-  b.Insertar(cal3);
-  b.Insertar(cal4);
-
-  if ( a==c )
-  	cout << "IGUALES" << endl;
-  else 
-	cout << "DISTINTOS" << endl;
-
-  if ( c==b )
-  	cout << "IGUALES" << endl;
-  else 
-	cout << "DISTINTOS" << endl;
-
-  b = a;
-cout << b.Preorden() <<endl;
-  a.Insertar(cal5);
-  if ( a==b )
-  	cout << "IGUALES" << endl;
-  else 
-	cout << "DISTINTOS" << endl;
-
-  cout << "Altura: " << b.Altura() << endl;
-  cout << b.Preorden() <<endl;
- return 0;
+  if (a==b)
+    cout<<"Iguales"<<endl;
+  else
+    cout<<"Distintos"<<endl;
+  v1=a.Inorden();
+  v2=b.Preorden();
+  v3=c.Postorden();
+  cout<<"a="<<v1<<" b="<<v2<<" c="<<v3<<endl;
+  return 0;
 }
