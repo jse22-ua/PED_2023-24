@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "tcalendario.h"
 #include "tvectorcalendario.h"
+#include "tlistacalendario.h"
 
 using namespace std;
 
@@ -33,6 +34,8 @@ class TABBCalendario{
         TVectorCalendario Niveles()const ;
         TABBCalendario operator+(const TABBCalendario &);
         TABBCalendario operator-(const TABBCalendario &);
+        bool InsertarExamen(const TCalendario &calendario, int &tipoInsercion);
+        void Clasificar(TVectorCalendario V, TListaCalendario &L1, TListaCalendario &L2, TListaCalendario &L3);
     private:
         TNodoABB *raiz;
         void AuxiliarConstructor(const TABBCalendario&);

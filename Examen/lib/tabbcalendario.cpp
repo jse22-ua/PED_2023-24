@@ -145,6 +145,57 @@ bool TABBCalendario::Insertar(const TCalendario &calendario)
     return true;
 }
 
+bool TABBCalendario::InsertarExamen(const TCalendario &calendario, int &tipoInsercion){
+    if (this->EsVacio())
+    {
+        if(tipoInsercion != -1 && tipoInsercion != 1){
+            tipoInsercion = 0;
+        }
+        TNodoABB *nuevo = new TNodoABB();
+        nuevo->item = calendario;
+        this->raiz = nuevo;
+    }
+    else{
+        if(calendario == this->raiz->item){
+            return false;
+        }
+        else if (calendario < this->raiz->item)
+        {
+            tipoInsercion = -1;
+            this->raiz->iz.InsertarExamen(calendario,tipoInsercion);
+        }
+        else
+        {
+            tipoInsercion = 1;
+            this->raiz->de.InsertarExamen(calendario,tipoInsercion);
+        }
+    }
+
+
+    return true;
+}
+
+void 
+TABBCalendario::Clasificar(TVectorCalendario V, TListaCalendario &L1, TListaCalendario &L2, TListaCalendario &L3){
+    int resultado;
+    for (int i = 0; i < V.Tamano(); i++)
+    {
+        if(this->InsertarExamen(V[i+1],resultado)){
+            if(resultado == 0){
+                L1.Insertar(V[i+1]);
+            }
+            else if(resultado == -1){
+                L2.Insertar(V[i+1]); 
+            }
+            else{
+                L3.Insertar(V[i+1]);
+            }
+        }
+        
+        
+    }
+}
+
 TCalendario TABBCalendario::getMayorIzquierda()
 {
     TCalendario defecto;
